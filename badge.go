@@ -22,7 +22,8 @@ const (
 )
 
 const (
-	logoDisplayTime = 10 * time.Second
+	logoDisplayTime = 5 * time.Second
+	titleName       = "Connect with me"
 )
 
 var colors = []color.RGBA{
@@ -61,7 +62,7 @@ func Badge() {
 		if quit {
 			break
 		}
-		blinkyRainbow("Hack Session", "29th All Day")
+		scroll("TinyGo:", "Getting the", "upper hen")
 		if quit {
 			break
 		}
@@ -93,9 +94,9 @@ func myNameIs(name string) {
 	display.FillRectangle(r, HEIGHT-r-1, WIDTH-2*r-1, r+1, colors[RED])
 	display.FillRectangle(0, HEIGHT-2*r-1, WIDTH, r, colors[RED])
 
-	// top text : my NAME is
-	w32, _ := tinyfont.LineWidth(&fonts.Regular12pt7b, "my NAME is")
-	tinyfont.WriteLine(&display, &fonts.Regular12pt7b, (WIDTH-int16(w32))/2, 24, "my NAME is", colors[WHITE])
+	// top text : Connect with me
+	w32, _ := tinyfont.LineWidth(&fonts.Bold9pt7b, titleName)
+	tinyfont.WriteLine(&display, &fonts.Bold9pt7b, (WIDTH-int16(w32))/2, 24, titleName, colors[WHITE])
 
 	// middle text
 	w32, _ = tinyfont.LineWidth(&fonts.Bold9pt7b, name)
@@ -109,7 +110,7 @@ func myNameIsRainbow(name string) {
 	myNameIs(name)
 
 	w32, _ := tinyfont.LineWidth(&fonts.Bold9pt7b, name)
-	for i := 0; i < 230; i++ {
+	for i := 0; i < 20; i++ {
 		tinyfont.WriteLineColors(&display, &fonts.Bold9pt7b, (WIDTH-int16(w32))/2, 72, name, rainbow[i:])
 		pressed, _ = buttons.Read8Input()
 		if pressed&machine.BUTTON_SELECT_MASK > 0 {
