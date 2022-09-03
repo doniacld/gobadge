@@ -10,13 +10,20 @@ import (
 	"text/template"
 )
 
-func GenerateLogoRGBAFile(filepath string) {
-	colors := generateLogoRGBA(filepath)
-	colorsStr := convertToString(colors)
-	generateFile(colorsStr)
+type ImageRGBA struct {
+	Filepath   string
+	VarName    string
+	OutputFile string
 }
 
-func generateLogoRGBA(filepath string) []color.RGBA {
+func (i ImageRGBA) GenerateImageRGBAFile() {
+	colors := generateImageRGBA(i.Filepath)
+	colorsStr := convertToString(colors)
+	i.generateFile(colorsStr)
+}
+
+func generateImageRGBA(filepath string) []color.RGBA {
+	fmt.Println(filepath)
 	file, _ := os.Open(filepath)
 	img, err := jpeg.Decode(file)
 	if err != nil {
@@ -57,22 +64,24 @@ func convertToString(colors []color.RGBA) string {
 	return content.String()
 }
 
-func generateFile(colorsStr string) {
-	tmp, err := template.ParseFiles("./cmd/logos/logo-template.txt")
+func (i ImageRGBA) generateFile(colorsStr string) {
+	tmp, err := template.ParseFiles("./cmd/logos/image-template.txt")
 	if err != nil {
 		log.Fatal("failed to parse template", err)
 	}
 
-	f, err := os.Create("logo.go")
+	//f, err := os.Create("logo.go")
+	f, err := os.Create(i.OutputFile)
 	if err != nil {
 		log.Fatal("failed to create output file", err)
 	}
 
 	type Colors struct {
-		LogoRGBA string
+		VarName    string
+		RGBAValues string
 	}
 
-	err = tmp.Execute(f, Colors{LogoRGBA: colorsStr})
+	err = tmp.Execute(f, Colors{VarName: i.VarName, RGBAValues: colorsStr})
 	if err != nil {
 		log.Fatal("failed to execute template", err)
 	}

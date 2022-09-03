@@ -1,6 +1,10 @@
 flash:
 	tinygo flash -target pybadge .
 
+flash-tinygo:
+	go run cmd/main.go -conf=tinygo
+	tinygo flash -target pybadge .
+
 flash-gceu:
 	go run cmd/main.go -conf=gceu22
 	tinygo flash -target pybadge .
@@ -13,7 +17,7 @@ flash-gcus:
 	go run cmd/main.go -conf=gcus22
 	tinygo flash -target pybadge .
 
-flash-tinygo:
-	go run cmd/main.go -conf=tinygo
+flash-cds:
+	go run cmd/main.go -conf=cds22
+	go run cmd/main.go -path="./cmd/assets/container-days-2022-talk-promotion.jpg" -varName="talkPromRGBA" -output="talkprom.go"
 	tinygo flash -target pybadge .
-

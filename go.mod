@@ -1,9 +1,10 @@
-module github.com/tinygo-org/gobadge
+module github.com/doniacld/gobadge
 
-go 1.15
+go 1.18
 
 require (
-	tinygo.org/x/drivers v0.20.1-0.20220514193317-9409d60eb2e5
+	github.com/tinygo-org/gobadge v0.0.0-20220806162527-1765bab6e3f2
+	tinygo.org/x/drivers v0.22.0
 	tinygo.org/x/tinydraw v0.3.0
 	tinygo.org/x/tinyfont v0.3.0
 )

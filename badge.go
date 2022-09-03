@@ -5,7 +5,7 @@ import (
 	"machine"
 	"time"
 
-	"github.com/tinygo-org/gobadge/fonts"
+	"github.com/doniacld/gobadge/fonts"
 	"tinygo.org/x/tinydraw"
 	"tinygo.org/x/tinyfont"
 )
@@ -45,7 +45,11 @@ func Badge() {
 	}
 
 	for {
-		logo()
+		image(logoRGBA)
+		if quit {
+			break
+		}
+		image(talkPromRGBA)
 		if quit {
 			break
 		}
@@ -61,7 +65,7 @@ func Badge() {
 		if quit {
 			break
 		}
-		blinkyRainbow("Hack Session", "29th All Day")
+		blinkyRainbow("Enjoying", "Container Days?")
 		if quit {
 			break
 		}
@@ -189,7 +193,7 @@ func scroll(topline, middleline, bottomline string) {
 	display.StopScroll()
 }
 
-func logo() {
-	display.FillRectangleWithBuffer(0, 0, WIDTH, HEIGHT, logoRGBA)
+func image(img []color.RGBA) {
+	display.FillRectangleWithBuffer(0, 0, WIDTH, HEIGHT, img)
 	time.Sleep(logoDisplayTime)
 }
